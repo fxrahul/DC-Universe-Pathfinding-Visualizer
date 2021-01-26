@@ -1,0 +1,160 @@
+.grid {
+    margin: auto auto;
+    margin-top : 20px;
+  }
+.description{
+  margin-top : 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.descriptionDetails{
+  margin-left : 30px;
+}
+
+.overlayTutorial{
+  position : absolute;
+  z-index: 2;
+  opacity : 100%;
+  background-color:white;
+  width : 50%;
+  height : 70%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border: 3px solid #343A40;
+  border-radius: 5px;
+  animation : slide 2s forwards;
+}
+
+@keyframes slide{
+  0% {
+    transform: translateX(-900px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.introductionPage{
+  animation : fade 2s;
+}
+
+@keyframes fade{
+  0%{
+    opacity : 0.4;
+  }
+  100%{
+    opacity : 1;
+  }
+}
+
+.introductionBottom{
+  position :absolute;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: fit-content;
+}
+
+.introButton{
+  background-color: #29A19C !important;
+  border-color: #29A19C !important;
+  float: left;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.nextPrev{
+  float : right;
+  margin-left: 0px;
+}
+
+#jlLogo{
+  position: absolute;
+  left: 40%;
+  top: -10px;
+}
+
+.introductionTitle{
+  margin-top : 10px;
+  color: #343A40;
+}
+.introductionSummaryTop{
+  margin-top: 30px;
+  color : #303C42;
+}
+
+.introductionSummaryBottom{
+  margin-top: 30px;
+  color : #8D9DA0;
+}
+#visualizeButton{
+  background-color: #29A19C !important;
+  border-color: #29A19C !important;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+#resetButton{
+  cursor: pointer;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  color : white;
+  left: 95%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+#mainDiv{
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline : 0;
+}
+
+.gifImage{
+  width : 300px;
+   border: 0.5px solid #343A40;
+  border-radius: 5px;
+}
+
+#github{
+  width: 100px;
+  margin-top: 40px;
+}
+
+#shortestPath{
+  margin-top: 30px;
+}
+
+#walls{
+  margin-top: 50px;
+}
+
+#weights{
+  margin-top: 50px;
+}
+
+#nodes{
+  margin-top: 40px;
+}
+
+#algorithms{
+  width: 200px;
+  margin-top: 22px;
+}
+
+.iconCredit{
+  margin-top: 20px;
+}

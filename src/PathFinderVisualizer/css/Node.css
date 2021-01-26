@@ -1,0 +1,94 @@
+
+  .node {
+    width: 30px;
+    height: 30px;
+    outline: 1px solid #464747;
+    display: inline-block;
+    margin-left : 6px;  
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+
+  .isFinishNode{
+    background-image: url(../images/wonderWoman.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+
+  .isStartNode{
+    background-image: url(../images/batman.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    -webkit-user-drag: none;
+    user-select: none;
+
+  }
+
+  .isVisitedNode{
+    background-image: url(../images/flash.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+
+  .isWallNode{
+    background-image: url(../images/flashVillian.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+
+  .isShortNode{
+    background-image: url(../images/batman.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+
+  .isWeightNode{
+    background-image: url(../images/flashIcon.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+
+  .isWeightedandVisited{
+    background-image: url(../images/flashIcon.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    animation: glow ease 0.1s;
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+
+
+  @keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(359deg);
+    }
+  }
+
+  .finalTarget{
+    background-image: url(../images/wonderWoman.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    animation : glow ease 0.1s;
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+
+  @keyframes glow {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+
