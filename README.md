@@ -17,13 +17,13 @@ I like visualizations as much as I love algorithms. So, I have tried to combine 
 height = "250px" />
 
 #### Adding Weights
-<img src="https://github.com/fxrahul/DC-Universe-Pathfinding-Visualizer/blob/gh-pages/static/media/justiceLeague.ced109d4.svg" alt = "Weights" width="250px"
+<img src="https://github.com/fxrahul/DC-Universe-Pathfinding-Visualizer/blob/master/src/PathFinderVisualizer/images/addWeights.gif" alt = "Weights" width="250px"
 height = "250px" />
 <br/>
 Press W + Mouse Click and Drag
 
 #### Adding Walls
-<img src="https://github.com/fxrahul/DC-Universe-Pathfinding-Visualizer/blob/gh-pages/static/media/addWalls.c8cec35e.gif" alt = "Walls" width="250px"
+<img src="https://github.com/fxrahul/DC-Universe-Pathfinding-Visualizer/blob/master/src/PathFinderVisualizer/images/addWalls.gif" alt = "Walls" width="250px"
 height = "250px" />
 <br/>
 Mouse Click and Drag
