@@ -38,15 +38,28 @@ export default class PathfinderVisualizer extends React.Component{
             startNodeCol : 4,
             endNodeRow : 9,
             endNodeCol : 38,
+            windowWidth : window.innerWidth,
         };
     }
 
     componentDidMount(){
-        const grid = getInitialGrid(this.state.startNodeRow, this.state.startNodeCol, this.state.endNodeRow,this.state.endNodeCol);
-        this.setState({grid});
-        document.getElementById('mainDiv').focus();
-        this.showSlides(slideIndex);
+        window.addEventListener("resize", this.handleResize());
+        if(this.state.windowWidth >= 1190){
+            const grid = getInitialGrid(this.state.startNodeRow, this.state.startNodeCol, this.state.endNodeRow,this.state.endNodeCol);
+            this.setState({grid});
+            document.getElementById('mainDiv').focus();
+            this.showSlides(slideIndex);
+        }
     }
+
+    componentWillUnmount() {
+        window.addEventListener("resize", this.handleResize());
+       } 
+
+    handleResize(){
+        this.setState({ windowWidth: window.innerWidth });
+    }
+
     plusSlides (n) {
         this.showSlides(slideIndex += n);
     }
@@ -188,6 +201,7 @@ export default class PathfinderVisualizer extends React.Component{
             startNodeCol : 4,
             endNodeRow : 9,
             endNodeCol : 38,
+            windowWidth : window.innerWidth,
         });
         algorithmName = "";
         wKeyPressed = false;
@@ -295,214 +309,222 @@ export default class PathfinderVisualizer extends React.Component{
     }
 
     render(){
+        const windowWidth  = this.state.windowWidth;
         const grid = this.state.grid;
         const isMousePressed = this.state.isMousePressed;
+        if(windowWidth < 1190){
+            return(
+                <div id = "blockScreen">
+                    <b>Thank you for visiting! Please use Desktop to view this website.</b>
+                </div>
+            );
+        }else{
         return(
-            <div id = "mainDiv" tabIndex = {0} onKeyDown = {(event) => this.onKeyDown(event)} onKeyUp = {(event) => this.onKeyUp(event)}>
-                
-                <Navbar fixed = "top" collapseOnSelect expand="lg" bg="dark" variant="dark">
-                    <Navbar.Brand href="#home">Pathfinding Visualizer</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                    <Navbar.Collapse id="responsive-navbar-nav">
-                        <Nav>
-                            <Nav.Item>
-                                <NavDropdown className = "algorithm" title="Algorithm" id="collasible-nav-dropdown" onSelect={this.handleAlgorithm}>
-                                    <NavDropdown.Item href="#" eventKey="Dijkstra">Dijkstra's</NavDropdown.Item>
-                                    <NavDropdown.Item href="#" eventKey="BFS">Breadth First Search (BFS)</NavDropdown.Item>
-                                    <NavDropdown.Item href="#" eventKey="DFS">Depth First Search (DFS)</NavDropdown.Item>
-                                </NavDropdown>
-                            </Nav.Item>
-                            <Nav.Item >
-    
-                                <Button id = "visualizeButton" onClick = {() => this.visualizeDijkstra()}>Visualize</Button>
-                            </Nav.Item>
-                            <Nav.Item >
-                                <span id = "resetButton" onClick = {() => this.resetState()}>Reset Grid</span>
-                            </Nav.Item>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Navbar>
-                <div>
-                    <div className = "description">
-                        <div className = "descriptionDetails">
-                            <img src = {Batman} alt = "startNode" width = "25px" height = "25px"/>Start Node (Batman)
-                        </div>
-                        <div className = "descriptionDetails">
-                        <img src = {Wonderwoman} alt = "targetNode" width = "25px" height = "25px"/>Target Node (Wonder Woman)
-                        </div>
-                        <div className = "descriptionDetails">
-                            <img src = {Flash} alt = "visitedNode" width = "25px" height = "25px"/>Visited Node (Flash)
-                        </div>
-                        <div className = "descriptionDetails">
-                            <img src = {Superman} alt = "weightNode" width = "25px" height = "25px"/>&nbsp;Weight Node(Superman)
-                        </div>
-                        <div className = "descriptionDetails">
-                            <img src = {FlashVillian} alt = "wallNode" width = "25px" height = "25px"/>Wall Node(Zoom)
-                        </div>
-                    </div> 
-                    <div className = "overlayTutorial" id = "overlayTutorialId">
-                        <div className = "introductionPage">
-                            <div className = "introductionTitle">
-                                <h1>Welcome to DC Universe Pathfinding Visualizer!</h1>
+                <div id = "mainDiv" tabIndex = {0} onKeyDown = {(event) => this.onKeyDown(event)} onKeyUp = {(event) => this.onKeyUp(event)}>
+                    <Navbar id = "navbarParent" fixed = "top" collapseOnSelect expand="lg" bg="dark" variant="dark">
+                        <Navbar.Brand href="#home">Pathfinding Visualizer</Navbar.Brand>
+                        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                        <Navbar.Collapse id="responsive-navbar-nav">
+                            <Nav>
+                                <Nav.Item>
+                                    <NavDropdown className = "algorithm" title="Algorithm" id="collasible-nav-dropdown" onSelect={this.handleAlgorithm}>
+                                        <NavDropdown.Item href="#" eventKey="Dijkstra">Dijkstra's</NavDropdown.Item>
+                                        <NavDropdown.Item href="#" eventKey="BFS">Breadth First Search (BFS)</NavDropdown.Item>
+                                        <NavDropdown.Item href="#" eventKey="DFS">Depth First Search (DFS)</NavDropdown.Item>
+                                    </NavDropdown>
+                                </Nav.Item>
+                                <Nav.Item >
+        
+                                    <Button id = "visualizeButton" onClick = {() => this.visualizeDijkstra()}>Visualize</Button>
+                                </Nav.Item>
+                                <Nav.Item >
+                                    <span id = "resetButton" onClick = {() => this.resetState()}>Reset Grid</span>
+                                </Nav.Item>
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Navbar>
+                    <div>
+                        <div className = "description">
+                            <div className = "descriptionDetails">
+                                <img src = {Batman} alt = "startNode" width = "25px" height = "25px"/>Start Node (Batman)
                             </div>
-                            <div className = "introductionSummary">
-                                <h5 className = "introductionSummaryTop">
-                                    In DC Universe, Batman have to meet Wonder woman as soon as possible.But, the problem is batman have 
-                                     number of paths to reach wonderwoman.<br/> Also, he has to deal with supermanin between these paths. Batman is asking flash to
-                                     find him a shortest path to reach Wonder woman. But, one more problem is flash has to deal with Zoom in between 
-                                     these paths. With all these above conditions, Flash have to find a shortest path for batman.
-                                </h5>
-                                <h6 className = "introductionSummaryBottom">
-                                    Press "Skip" to skip this tutorial or else press "Next" to take a deep dive into this amazing tutorial.
-                                </h6>
+                            <div className = "descriptionDetails">
+                            <img src = {Wonderwoman} alt = "targetNode" width = "25px" height = "25px"/>Target Node (Wonder Woman)
                             </div>
-                        </div>
-                        <div className = "introductionPage">
-                            <div className = "introductionTitle">
-                                <h1>Shortest Path Algorithm!</h1>
+                            <div className = "descriptionDetails">
+                                <img src = {Flash} alt = "visitedNode" width = "25px" height = "25px"/>Visited Node (Flash)
                             </div>
-                            <div className = "introductionSummary">
-                                <h5 className = "introductionSummaryTop">
-                                Shortest path algorithms are a family of algorithms designed to solve the shortest path problem.
-                                 The shortest path problem is something most people have some intuitive familiarity with: given two points, A and B, 
-                                 what is the shortest path between them? In computer science, however, the shortest path problem can take different
-                                  forms and so different algorithms are needed to be able to solve them all.
-                                </h5>
-                                <img className = "gifImage" id = "shortestPath" src = {shortestNodePath} alt = "shortestPath"/>
+                            <div className = "descriptionDetails">
+                                <img src = {Superman} alt = "weightNode" width = "25px" height = "25px"/>&nbsp;Weight Node(Superman)
                             </div>
-                        </div>
-                        <div className = "introductionPage">
+                            <div className = "descriptionDetails">
+                                <img src = {FlashVillian} alt = "wallNode" width = "25px" height = "25px"/>Wall Node(Zoom)
+                            </div>
+                        </div> 
+                        <div className = "overlayTutorial" id = "overlayTutorialId">
+                            <div className = "introductionPage">
                                 <div className = "introductionTitle">
-                                    <h1>Walls</h1>
+                                    <h1>Welcome to DC Universe Pathfinding Visualizer!</h1>
                                 </div>
-                                <div>
-                                    <div>
-                                        <h5 className = "introductionSummaryTop">
-                                            Walls : Click and drag mouse to add walls
-                                        </h5>
-                                        <img className = "gifImage" id = "walls" src = {addWalls} alt = "addWalls"/>
-                                    </div>
-                                </div>
-                        </div>
-                        <div className = "introductionPage">
-                                <div className = "introductionTitle">
-                                    <h1>Weights</h1>
-                                </div>
-                                <div>
-                                    <div>
-                                        <h5 className = "introductionSummaryTop">
-                                            Weights : Press W and then click-drag to add weights.
-                                        </h5>
-                                        <img className = "gifImage" id = "weights" src = {addWeights} alt = "addWeights"/>
-                                    </div>        
-                                </div>
-                        </div>
-                        <div className = "introductionPage">
-                                <div className = "introductionTitle">
-                                    <h1>Nodes</h1>
-                                </div>
-                                <div>
-                                    <div>
-                                        <h5 className = "introductionSummaryTop">
-                                            Click and drag to set start and target node.
-                                        </h5>
-                                        <img className = "gifImage" id = "nodes" src = {movingNodes} alt = "movingNodes"/>
-                                    </div>        
-                                </div>
-                        </div>
-                        <div className = "introductionPage">
-                                <div className = "introductionTitle">
-                                    <h1>Algorithms</h1>
-                                </div>
-                                <div>
-                                    <div>
-                                        <h5 className = "introductionSummaryTop">
-                                            Click on Algorithms to select from different algorithms and then visualize it!.
-                                        </h5>
-                                        <h6><b>Dijkstra's : </b>It is weigted algorithm and guarantees shortest path.</h6>
-                                        <h6><b>Breadth First Search : </b>It is unweigted algorithm and guarantees shortest path.</h6>
-                                        <h6><b>Depth First Search : </b>It is unweigted algorithm but does not guarantees shortest path.</h6>
-                                        <img className = "gifImage" id = "algorithms" src = {algorithms} alt = "algorithms"/>
-                                    </div>        
-                                </div>
-                        </div>
-                        <div className = "introductionPage">
-                                <div className = "introductionTitle">
-                                    <h1>Enjoy the Project!</h1>
-                                </div>
-                                <div>
+                                <div className = "introductionSummary">
                                     <h5 className = "introductionSummaryTop">
-                                        I hope you enjoy my work. Feel free to check out my github repository for this project.
+                                        In DC Universe, Batman have to meet Wonder woman as soon as possible.But, the problem is batman have 
+                                        number of paths to reach wonderwoman.<br/> Also, he has to deal with supermanin between these paths. Batman is asking flash to
+                                        find him a shortest path to reach Wonder woman. But, one more problem is flash has to deal with Zoom in between 
+                                        these paths. With all these above conditions, Flash have to find a shortest path for batman.
                                     </h5>
-                                    <a href = "https://github.com/fxrahul" ><img id = "github" src = {github} alt = "github" /></a>
-                                    <div className = "iconCredit">
-                                        <h6>
-                                            <b>Icon Credits: </b>
-                                            <a href = "https://www.iconfinder.com/">Icon Finder</a>
-                                            &nbsp;
-                                            <a href = "https://iconmonstr.com/">iconmonstr</a>
-                                        </h6>
-                                    </div>
+                                    <h6 className = "introductionSummaryBottom">
+                                        Press "Skip" to skip this tutorial or else press "Next" to take a deep dive into this amazing tutorial.
+                                    </h6>
                                 </div>
-                        </div>
-                        <div className = "introductionBottom">
-                                <Button className = "introButton" id ="skip" onClick = {() => this.closeOverlay()}>
-                                    Skip
-                                </Button>
-                            
-                                <img id = "jlLogo" src = {JusticeLeague} alt = "batman" height = "160px" width = "160px"/>
-                                <Button className = "introButton nextPrev" id = "nextBtn" onClick = {() => this.plusSlides(1)}>
-                                    Next
-                                </Button>
-                                <Button className = "introButton nextPrev" id = "prevBtn" onClick = {() => this.plusSlides(-1)}>
-                                    Previous
-                                </Button>
-                        </div>
-                    </div>
-                    <div className = "grid">          
-                        {grid.map((row, rowIndex) => {
-                            return (
-                            <div key = {rowIndex}>
-                                {row.map((node, nodeIndex) => {
-                                    const isStart = node.isStart;
-                                    const isFinish = node.isFinish;
-                                    const isVisited = node.isVisited;
-                                    const distance = node.distance;
-                                    const isWeight = node.isWeight;
-                                    const row = node.row;
-                                    const col = node.col;
-                                    const isWall = node.isWall;
-                                    const previousNode = node.previosuNode;
-                                    const weights = node.weights;
-                                    return (
-                                    <Node 
-                                        key = {nodeIndex}
-                                        isStart = {isStart}
-                                        isFinish = {isFinish}
-                                        isVisited = {isVisited}
-                                        isWeight = {isWeight}
-                                        distance = {distance}
-                                        row = {row}
-                                        col = {col}
-                                        weights = {weights}
-                                        isMousePressed={isMousePressed}
-                                        onMouseDown={(row, col) => this.onMouseDown(row, col)}
-                                        onMouseEnter={(row, col) =>
-                                        this.onMouseEnter(row, col)
-                                        }
-                                        onMouseUp={() => this.onMouseUp()}
-                                        isWall = {isWall}
-                                        previousNode = {previousNode}>
-                                    </Node>
-                                    );
-                                })}
                             </div>
-                            );
-                        })}
-                    </div>
-            </div>
-            </div>
+                            <div className = "introductionPage">
+                                <div className = "introductionTitle">
+                                    <h1>Shortest Path Algorithm!</h1>
+                                </div>
+                                <div className = "introductionSummary">
+                                    <h5 className = "introductionSummaryTop">
+                                    Shortest path algorithms are a family of algorithms designed to solve the shortest path problem.
+                                    The shortest path problem is something most people have some intuitive familiarity with: given two points, A and B, 
+                                    what is the shortest path between them? In computer science, however, the shortest path problem can take different
+                                    forms and so different algorithms are needed to be able to solve them all.
+                                    </h5>
+                                    <img className = "gifImage" id = "shortestPath" src = {shortestNodePath} alt = "shortestPath"/>
+                                </div>
+                            </div>
+                            <div className = "introductionPage">
+                                    <div className = "introductionTitle">
+                                        <h1>Walls</h1>
+                                    </div>
+                                    <div>
+                                        <div>
+                                            <h5 className = "introductionSummaryTop">
+                                                Walls : Click and drag mouse to add walls
+                                            </h5>
+                                            <img className = "gifImage" id = "walls" src = {addWalls} alt = "addWalls"/>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div className = "introductionPage">
+                                    <div className = "introductionTitle">
+                                        <h1>Weights</h1>
+                                    </div>
+                                    <div>
+                                        <div>
+                                            <h5 className = "introductionSummaryTop">
+                                                Weights : Press W and then click-drag to add weights.
+                                            </h5>
+                                            <img className = "gifImage" id = "weights" src = {addWeights} alt = "addWeights"/>
+                                        </div>        
+                                    </div>
+                            </div>
+                            <div className = "introductionPage">
+                                    <div className = "introductionTitle">
+                                        <h1>Nodes</h1>
+                                    </div>
+                                    <div>
+                                        <div>
+                                            <h5 className = "introductionSummaryTop">
+                                                Click and drag to set start and target node.
+                                            </h5>
+                                            <img className = "gifImage" id = "nodes" src = {movingNodes} alt = "movingNodes"/>
+                                        </div>        
+                                    </div>
+                            </div>
+                            <div className = "introductionPage">
+                                    <div className = "introductionTitle">
+                                        <h1>Algorithms</h1>
+                                    </div>
+                                    <div>
+                                        <div>
+                                            <h5 className = "introductionSummaryTop">
+                                                Click on Algorithms to select from different algorithms and then visualize it!.
+                                            </h5>
+                                            <h6><b>Dijkstra's : </b>It is weigted algorithm and guarantees shortest path.</h6>
+                                            <h6><b>Breadth First Search : </b>It is unweigted algorithm and guarantees shortest path.</h6>
+                                            <h6><b>Depth First Search : </b>It is unweigted algorithm but does not guarantees shortest path.</h6>
+                                            <img className = "gifImage" id = "algorithms" src = {algorithms} alt = "algorithms"/>
+                                        </div>        
+                                    </div>
+                            </div>
+                            <div className = "introductionPage">
+                                    <div className = "introductionTitle">
+                                        <h1>Enjoy the Project!</h1>
+                                    </div>
+                                    <div>
+                                        <h5 className = "introductionSummaryTop">
+                                            I hope you enjoy my work. Feel free to check out my github repository for this project.
+                                        </h5>
+                                        <a href = "https://github.com/fxrahul" ><img id = "github" src = {github} alt = "github" /></a>
+                                        <div className = "iconCredit">
+                                            <h6>
+                                                <b>Icon Credits: </b>
+                                                <a href = "https://www.iconfinder.com/">Icon Finder</a>
+                                                &nbsp;
+                                                <a href = "https://iconmonstr.com/">iconmonstr</a>
+                                            </h6>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div className = "introductionBottom">
+                                    <Button className = "introButton" id ="skip" onClick = {() => this.closeOverlay()}>
+                                        Skip
+                                    </Button>
+                                
+                                    <img id = "jlLogo" src = {JusticeLeague} alt = "batman" height = "160px" width = "160px"/>
+                                    <Button className = "introButton nextPrev" id = "nextBtn" onClick = {() => this.plusSlides(1)}>
+                                        Next
+                                    </Button>
+                                    <Button className = "introButton nextPrev" id = "prevBtn" onClick = {() => this.plusSlides(-1)}>
+                                        Previous
+                                    </Button>
+                            </div>
+                        </div>
+                        <div className = "grid">          
+                            {grid.map((row, rowIndex) => {
+                                return (
+                                <div key = {rowIndex}>
+                                    {row.map((node, nodeIndex) => {
+                                        const isStart = node.isStart;
+                                        const isFinish = node.isFinish;
+                                        const isVisited = node.isVisited;
+                                        const distance = node.distance;
+                                        const isWeight = node.isWeight;
+                                        const row = node.row;
+                                        const col = node.col;
+                                        const isWall = node.isWall;
+                                        const previousNode = node.previosuNode;
+                                        const weights = node.weights;
+                                        return (
+                                        <Node 
+                                            key = {nodeIndex}
+                                            isStart = {isStart}
+                                            isFinish = {isFinish}
+                                            isVisited = {isVisited}
+                                            isWeight = {isWeight}
+                                            distance = {distance}
+                                            row = {row}
+                                            col = {col}
+                                            weights = {weights}
+                                            isMousePressed={isMousePressed}
+                                            onMouseDown={(row, col) => this.onMouseDown(row, col)}
+                                            onMouseEnter={(row, col) =>
+                                            this.onMouseEnter(row, col)
+                                            }
+                                            onMouseUp={() => this.onMouseUp()}
+                                            isWall = {isWall}
+                                            previousNode = {previousNode}>
+                                        </Node>
+                                        );
+                                    })}
+                                </div>
+                                );
+                            })}
+                        </div>
+                </div>
+                </div>
         );
+    }
     }
 }
 const getInitialGrid = (startNodeRow, startNodeCol, endNodeRow, endNodeCol) => {
