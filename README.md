@@ -43,8 +43,8 @@ Open your terminal and then type
 
 ```
  $ git clone https://github.com/fxrahul/DC-Universe-Pathfinding-Visualizer.git 
- $ npm install
  $ cd DC-Universe-Pathfinding-Visualizer
+ $ npm install
  $ npm start
  ```
  
