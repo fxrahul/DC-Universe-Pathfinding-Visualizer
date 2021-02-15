@@ -1,5 +1,5 @@
 # DC Universe Pathfinding Visualizer
-DC Universe Pathfinding Visualizer is the project based on finding shortest path algorithms. In DC Universe, Flash helps out Batman to meet Wonder woman by finding him the shortest path. You can access my project here : https://dc-universe.herokuapp.com/
+DC Universe Pathfinding Visualizer is the project based on finding shortest path using graph algorithms. In DC Universe, Flash helps out Batman to meet Wonder woman by finding him the shortest path. You can access my project here : https://dc-universe.herokuapp.com/
 
 ### Motivation
 I like visualizations as much as I love algorithms. So, I have tried to combine both and present you this interesting project. As a DC fan, I have used DC characters for visualization. I hope you enjoy and appreciate my work.
